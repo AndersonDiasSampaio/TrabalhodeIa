@@ -19,6 +19,7 @@ public class CadastroUsuarioDTO {
 
     @NotBlank(message = "A confirmação de senha é obrigatória")
     private String confirmPassword;
+    // teste
 
     public CadastroUsuarioDTO() {
     }
