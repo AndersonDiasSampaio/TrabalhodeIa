@@ -30,6 +30,7 @@ public class SistemaApplication {
         };
     }*/
 
+
     @Bean
     public CommandLineRunner initDatabase(UsuarioRepository usuarioRepository,
                                           PasswordEncoder passwordEncoder,
