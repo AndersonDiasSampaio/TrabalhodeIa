@@ -14,8 +14,6 @@ public class SistemaApplication {
     public static void main(String[] args) {
         SpringApplication.run(SistemaApplication.class, args);
     }
-
-
     @Bean
     public CommandLineRunner initDatabase(UsuarioRepository usuarioRepository,
                                           PasswordEncoder passwordEncoder,
