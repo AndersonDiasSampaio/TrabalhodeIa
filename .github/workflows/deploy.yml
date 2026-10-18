@@ -16,8 +16,7 @@ env:
   REGION: ${{ secrets.GCP_REGION }}
   SERVICE_NAME: ${{ secrets.CLOUDRUN_SERVICE_NAME }}
   GAR_LOCATION: ${{ secrets.GAR_LOCATION }}
-  DEFAULT_USER_USERNAME: ${{ secrets.DEFAULT_USER_USERNAME }}
-  DEFAULT_USER_PASSWORD: ${{ secrets.DEFAULT_USER_PASSWORD }}
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -45,7 +44,7 @@ jobs:
           docker build -t "$IMAGE" .
           docker push "$IMAGE"
 
-      - name: Deploy no Cloud Run
+      - name: Deploy no Cloud Run (definindo env vars do serviço)
         run: |
           IMAGE="${{ env.GAR_LOCATION }}:${{ github.sha }}"
           gcloud run deploy "${{ env.SERVICE_NAME }}" \
@@ -53,4 +52,4 @@ jobs:
             --region="${{ env.REGION }}" \
             --platform=managed \
             --allow-unauthenticated \
-            --set-env-vars "DEFAULT_USER_USERNAME=${{ secrets.DEFAULT_USER_USERNAME }},DEFAULT_USER_PASSWORD=${{ secrets.DEFAULT_USER_PASSWORD }}"
+            --set-env-vars "DEFAULT_USER_USERNAME=${{ secrets.DEFAULT_USER_USERNAME }},DEFAULT_USER_PASSWORD=${{ secrets.DEFAULT_USER_PASSWORD }},DEFAULT_USER_ROLE=${{ secrets.DEFAULT_USER_ROLE }}"
