@@ -33,23 +33,12 @@ public class SistemaApplication {
     @Bean
     public CommandLineRunner initDatabase(UsuarioRepository usuarioRepository,
                                           PasswordEncoder passwordEncoder,
-                                          Environment env) { // injeta o Spring Environment
+                                          Environment env) {
         return args -> {
-            // Leia a propriedade definida em application.properties (que por sua vez pode
-            // referenciar variáveis de ambiente como ${DEFAULT_USER_PASSWORD})
-            String username = env.getProperty("default.user.username");
-            String rawPassword = env.getProperty("default.user.password");
-            String role = env.getProperty("default.user.role");
-
-            if (username == null || username.isBlank()) {
-                throw new IllegalStateException("DEFAULT_USER_USERNAME não definido — abortando inicialização do usuário padrão");
-            }
-            if (rawPassword == null || rawPassword.isBlank()) {
-                throw new IllegalStateException("DEFAULT_USER_PASSWORD não definido — abortando inicialização do usuário padrão");
-            }
-            if (role == null || role.isBlank()) {
-                throw new IllegalStateException("DEFAULT_USER_ROLE não definido — abortando inicialização do usuário padrão");
-            }
+            // Lança IllegalStateException com mensagem clara se faltar
+            String username = env.getRequiredProperty("default.user.username"); // throws if não definido
+            String rawPassword = env.getRequiredProperty("default.user.password");
+            String role = env.getProperty("default.user.role", "ROLE_USER"); // role com default
 
             if (!usuarioRepository.existsByUsername(username)) {
                 Usuario usuarioPadrao = new Usuario(
