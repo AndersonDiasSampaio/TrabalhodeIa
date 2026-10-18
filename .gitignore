@@ -1,0 +1,75 @@
+# ==========================================
+# IDEs & Editores
+# ==========================================
+
+# Antigravity IDE / VS Code
+.vscode/
+.antigravity/
+.gemini/
+*.code-workspace
+
+# IntelliJ IDEA
+.idea/
+*.iml
+*.iws
+*.ipr
+out/
+
+# Eclipse
+.project
+.classpath
+.settings/
+bin/
+
+# NetBeans
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbproject/load-impl.xml
+
+# ==========================================
+# Build & Compilação (Java / Maven)
+# ==========================================
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+.mvn/wrapper/maven-wrapper.jar
+
+# Arquivos compilados e pacotes
+*.class
+*.jar
+*.war
+*.ear
+*.nar
+
+# ==========================================
+# Logs & Arquivos Temporários
+# ==========================================
+*.log
+*.log.*
+logs/
+*.tmp
+*.bak
+*.swp
+*~
+
+# ==========================================
+# Sistema Operacional
+# ==========================================
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*

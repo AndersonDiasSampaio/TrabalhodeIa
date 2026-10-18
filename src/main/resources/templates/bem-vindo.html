@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel Principal | Bem-vindo ao Sistema</title>
+    <meta name="description" content="Página protegida por Spring Security acessível após login com sucesso">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <!-- Efeitos de iluminação de fundo -->
+    <div class="ambient-glow">
+        <div class="glow-circle-1"></div>
+        <div class="glow-circle-2"></div>
+        <div class="glow-circle-3"></div>
+    </div>
+
+    <div class="app-layout">
+        <!-- Barra de Navegação Superior -->
+        <header>
+            <nav class="navbar">
+                <a th:href="@{/bem-vindo}" class="navbar-brand">
+                    <div class="navbar-logo-icon">
+                        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                        </svg>
+                    </div>
+                    <span class="navbar-brand-text">Sistema<span>Seguro</span></span>
+                </a>
+
+                <div class="navbar-actions">
+                    <div class="user-status-pill">
+                        <span class="status-dot"></span>
+                        <span th:text="${username}">Usuário</span>
+                    </div>
+
+                    <!-- Formulário de Logout Seguro (Spring Security CSRF) -->
+                    <form th:action="@{/logout}" method="post" style="margin: 0;">
+                        <button type="submit" class="btn-logout" title="Sair do sistema">
+                            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
+                            </svg>
+                            <span>Encerrar Sessão</span>
+                        </button>
+                    </form>
+                </div>
+            </nav>
+        </header>
+
+        <!-- Conteúdo Principal -->
+        <main class="main-container">
+            <!-- Hero Card: Boas-vindas -->
+            <section class="hero-card">
+                <div class="hero-badge-tag">
+                    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+                    </svg>
+                    Autenticação Concluída com Sucesso
+                </div>
+
+                <h1 class="hero-title">
+                    Bem-vindo ao sistema, <span class="user-highlight" th:text="${nomeCompleto}">Usuário</span>!
+                </h1>
+
+                <p class="hero-description">
+                    Seu login foi validado com êxito pelo mecanismo de segurança do <strong>Spring Security</strong> conectado ao banco de dados <strong>H2 / JPA</strong>. Você está navegando em uma rota protegida que não pode ser acessada sem autenticação prévia.
+                </p>
+
+                <div class="hero-pills">
+                    <div class="info-pill">
+                        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                        </svg>
+                        <span>Papel: <strong th:text="${roles}">USER</strong></span>
+                    </div>
+
+                    <div class="info-pill">
+                        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                        </svg>
+                        <span>Cadastrado em: <strong th:text="${dataCadastro}">--</strong></span>
+                    </div>
+
+                    <div class="info-pill">
+                        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+                        </svg>
+                        <span>Total de Usuários no Banco: <strong th:text="${totalUsuarios}">0</strong></span>
+                    </div>
+
+                    <div class="info-pill">
+                        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                        <span>Hora do Acesso: <strong th:text="${horaAcesso}">--:--:--</strong></span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Cards de Monitoramento e Recursos -->
+            <section class="dashboard-grid">
+                <!-- Card 1 -->
+                <div class="feature-card">
+                    <div class="card-icon-box icon-purple">
+                        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+                        </svg>
+                    </div>
+                    <div class="card-label">Camada de Proteção</div>
+                    <div class="card-val">Filtro de Rotas</div>
+                    <p class="card-subtext">Todas as requisições para rotas internas são interceptadas e validadas pelo Spring Security Filter Chain.</p>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="feature-card">
+                    <div class="card-icon-box icon-green">
+                        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4"/>
+                        </svg>
+                    </div>
+                    <div class="card-label">Banco de Dados</div>
+                    <div class="card-val">H2 / JPA Hibernate</div>
+                    <p class="card-subtext">Usuários cadastrados são persistidos na entidade <code>Usuario</code> com verificação de unicidade.</p>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="feature-card">
+                    <div class="card-icon-box icon-cyan">
+                        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+                        </svg>
+                    </div>
+                    <div class="card-label">Mecanismo de Visão</div>
+                    <div class="card-val">Thymeleaf Engine</div>
+                    <p class="card-subtext">Templates processados dinamicamente no lado servidor com integração direta ao Spring Security 6.</p>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="feature-card">
+                    <div class="card-icon-box icon-amber">
+                        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                        </svg>
+                    </div>
+                    <div class="card-label">Criptografia</div>
+                    <div class="card-val">BCrypt Hashing</div>
+                    <p class="card-subtext">As senhas digitadas no cadastro são protegidas com salt e hashing forte através da interface PasswordEncoder.</p>
+                </div>
+            </section>
+
+            <!-- Banner Informativo de Arquitetura -->
+            <section class="security-banner">
+                <div class="security-content">
+                    <div class="security-shield-icon">
+                        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                        </svg>
+                    </div>
+                    <div class="security-text">
+                        <h3>Como funciona a proteção de rotas no sistema?</h3>
+                        <p>
+                            Se qualquer visitante tentar acessar diretamente a URL <code>/bem-vindo</code> sem ter efetuado login prévio, o Spring Security interceptará a requisição e redirecionará automaticamente para <code>/login</code>. Novos usuários podem se registrar em <code>/cadastro</code> e logar imediatamente.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Ações -->
+                <div style="display: flex; gap: 0.75rem; align-items: center; flex-wrap: wrap;">
+                    <a th:href="@{/cadastro}" class="btn-submit" style="margin-top: 0; padding: 0.75rem 1.25rem; background: rgba(255, 255, 255, 0.1); border: 1px solid var(--border-color); text-decoration: none;">
+                        <span>Cadastrar Outro Usuário</span>
+                    </a>
+
+                    <form th:action="@{/logout}" method="post" style="margin: 0;">
+                        <button type="submit" class="btn-submit" style="margin-top: 0; padding: 0.75rem 1.4rem;">
+                            <span>Testar Logout</span>
+                            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
+                            </svg>
+                        </button>
+                    </form>
+                </div>
+            </section>
+        </main>
+
+        <!-- Rodapé -->
+        <footer class="app-footer">
+            <p>Sistema desenvolvido com <strong>Java 21</strong>, <strong>Spring Boot 3</strong>, <strong>Spring Security</strong>, <strong>Spring Data JPA (H2)</strong> e <strong>Thymeleaf</strong>.</p>
+        </footer>
+    </div>
+</body>
+</html>
