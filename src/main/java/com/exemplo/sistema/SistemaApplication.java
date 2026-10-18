@@ -7,14 +7,14 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
+import org.springframework.core.env.Environment;
 @SpringBootApplication
 public class SistemaApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(SistemaApplication.class, args);
     }
-
+/*
     @Bean
     public CommandLineRunner initDatabase(UsuarioRepository usuarioRepository, PasswordEncoder passwordEncoder) {
         return args -> {
@@ -24,6 +24,39 @@ public class SistemaApplication {
                         "usuario",
                         passwordEncoder.encode("123456"),
                         "ROLE_USER"
+                );
+                usuarioRepository.save(usuarioPadrao);
+            }
+        };
+    }*/
+
+    @Bean
+    public CommandLineRunner initDatabase(UsuarioRepository usuarioRepository,
+                                          PasswordEncoder passwordEncoder,
+                                          Environment env) { // injeta o Spring Environment
+        return args -> {
+            // Leia a propriedade definida em application.properties (que por sua vez pode
+            // referenciar variáveis de ambiente como ${DEFAULT_USER_PASSWORD})
+            String username = env.getProperty("default.user.username");
+            String rawPassword = env.getProperty("default.user.password");
+            String role = env.getProperty("default.user.role");
+
+            if (username == null || username.isBlank()) {
+                throw new IllegalStateException("DEFAULT_USER_USERNAME não definido — abortando inicialização do usuário padrão");
+            }
+            if (rawPassword == null || rawPassword.isBlank()) {
+                throw new IllegalStateException("DEFAULT_USER_PASSWORD não definido — abortando inicialização do usuário padrão");
+            }
+            if (role == null || role.isBlank()) {
+                throw new IllegalStateException("DEFAULT_USER_ROLE não definido — abortando inicialização do usuário padrão");
+            }
+
+            if (!usuarioRepository.existsByUsername(username)) {
+                Usuario usuarioPadrao = new Usuario(
+                        "Usuário Padrão",
+                        username,
+                        passwordEncoder.encode(rawPassword),
+                        role
                 );
                 usuarioRepository.save(usuarioPadrao);
             }
