@@ -41,10 +41,11 @@ public class SistemaApplication {
             String username = env.getRequiredProperty("default.user.username"); // throws if não definido
             String rawPassword = env.getRequiredProperty("default.user.password");
             String role = env.getProperty("default.user.role"); // role com default
+            String nomeCompleto= env.getProperty("default.user.fullname");
 
             if (!usuarioRepository.existsByUsername(username)) {
                 Usuario usuarioPadrao = new Usuario(
-                        "Usuário Padrão",
+                        nomeCompleto,
                         username,
                         passwordEncoder.encode(rawPassword),
                         role

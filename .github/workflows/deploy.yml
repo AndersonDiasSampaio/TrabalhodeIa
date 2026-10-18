@@ -52,4 +52,4 @@ jobs:
             --region="${{ env.REGION }}" \
             --platform=managed \
             --allow-unauthenticated \
-            --set-env-vars "DEFAULT_USER_USERNAME=${{ secrets.DEFAULT_USER_USERNAME }},DEFAULT_USER_PASSWORD=${{ secrets.DEFAULT_USER_PASSWORD }},DEFAULT_USER_ROLE=${{ secrets.DEFAULT_USER_ROLE }}"
+            --set-env-vars "DEFAULT_USER_USERNAME=${{ secrets.DEFAULT_USER_USERNAME }},DEFAULT_USER_PASSWORD=${{ secrets.DEFAULT_USER_PASSWORD }},DEFAULT_USER_ROLE=${{ secrets.DEFAULT_USER_ROLE }},DEFAULT_USER_FULLNAME=${{ secrets.DEFAULT_USER_FULLNAME }}"
