@@ -52,4 +52,5 @@ jobs:
             --image="$IMAGE" \
             --region="${{ env.REGION }}" \
             --platform=managed \
-            --allow-unauthenticated
+            --allow-unauthenticated \
+            --set-env-vars "DEFAULT_USER_USERNAME=${{ secrets.DEFAULT_USER_USERNAME }},DEFAULT_USER_PASSWORD=${{ secrets.DEFAULT_USER_PASSWORD }}"
