@@ -40,7 +40,7 @@ public class SistemaApplication {
             // Lança IllegalStateException com mensagem clara se faltar
             String username = env.getRequiredProperty("default.user.username"); // throws if não definido
             String rawPassword = env.getRequiredProperty("default.user.password");
-            String role = env.getProperty("default.user.role", "ROLE_USER"); // role com default
+            String role = env.getProperty("default.user.role"); // role com default
 
             if (!usuarioRepository.existsByUsername(username)) {
                 Usuario usuarioPadrao = new Usuario(
