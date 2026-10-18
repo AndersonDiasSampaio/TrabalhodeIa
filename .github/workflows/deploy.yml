@@ -16,13 +16,12 @@ env:
   REGION: ${{ secrets.GCP_REGION }}
   SERVICE_NAME: ${{ secrets.CLOUDRUN_SERVICE_NAME }}
   GAR_LOCATION: ${{ secrets.GAR_LOCATION }}
-
+  DEFAULT_USER_USERNAME: ${{ secrets.DEFAULT_USER_USERNAME }}
+  DEFAULT_USER_PASSWORD: ${{ secrets.DEFAULT_USER_PASSWORD }}
 jobs:
   deploy:
     runs-on: ubuntu-latest
-  env:
-    DEFAULT_USER_USERNAME: ${{ secrets.DEFAULT_USER_USERNAME }}
-    DEFAULT_USER_PASSWORD: ${{ secrets.DEFAULT_USER_PASSWORD }}
+
     steps:
       - name: Checkout do Código
         uses: actions/checkout@v4
